@@ -4,8 +4,7 @@
 `vue create "proj_name"`
 
 # install 
-`npm install vue-route`
-`npm install scss-st`
+`npm install vue-route`s
 
 # build 
 `npm run serve`
