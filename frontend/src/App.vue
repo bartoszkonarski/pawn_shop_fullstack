@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <section id="app">
     <navBar> </navBar>
     <router-view></router-view>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style>
-#app {
+body {
+  margin: 0px;
 }
 </style>
