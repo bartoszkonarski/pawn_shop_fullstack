@@ -4,7 +4,7 @@
 `vue create "proj_name"`
 
 # install 
-`npm install vue-route`s
+`npm install vue-router`
 
-# build 
+# run
 `npm run serve`
