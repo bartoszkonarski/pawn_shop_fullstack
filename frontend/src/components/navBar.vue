@@ -9,15 +9,21 @@
     <div class="nav-link-container">
 
       <router-link to="/">
-        <div class="nav-tab">addItem</div>
+        <div class="nav-tab" style="background-color: #96F04D">
+          addItem
+        </div>
       </router-link>
 
       <router-link to="/add">
-        <div class="nav-tab">listItem</div>
+        <div class="nav-tab" style="background-color: #50D98E">
+          <font-awesome-icon icon="fa-solid fa-basket-shopping" />
+        </div>
       </router-link> 
 
       <router-link to="/summary">
-        <div class="nav-tab">summary</div>
+        <div class="nav-tab" style="background-color: #E6D149">
+          summary
+        </div>
       </router-link>  
 
     </div>
@@ -46,23 +52,26 @@ export default {
 
 <style scoped>
 .nav-container{
-  background-color: blue;
+  background-color: #6666FF;
   height: 20vh;
 }
 .nav-link-container{
   float: left;
   width: 70vw;
   height: 14vh;
-  
 }
 .nav-tab{
     display: block;
-    height: 40px;
-    width: 100px;
-    margin:50px 100px;
-    background: rgb(78, 41, 82);
-    float: left;
-    margin-top: 3vh;
+    background: red;
+    width: 15%;
+    height: 50%;
+    margin: 3% 5%;
+    float:inline-start;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: -1px 15px 60px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -1px 15px 60px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 15px 60px 0px rgba(0,0,0,0.75);
 }
 .nav-logo{
   float: left;
@@ -71,5 +80,8 @@ export default {
 img{
   width: 30vw;
   height: 14vh;
+}
+router-link{
+ border-top: solid 4px white;
 }
 </style>
