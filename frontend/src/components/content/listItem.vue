@@ -1,6 +1,11 @@
 <template>
   <section>
-      listItem temp
+      <div class="list-left-panel">
+
+      </div>
+      <div class="list-right-panel">
+        
+      </div>
   </section>
 </template>
 
