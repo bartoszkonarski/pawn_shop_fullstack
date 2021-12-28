@@ -92,8 +92,11 @@ export default {
 }
 .nav-user-accond{
   float: left;
-  width: 20vw;
+  width: 15vw;
   height: 14vh;
+  text-align: center;
+  align-items: center;
+
 }
 .nav-accond-info{
   background:#4DC8F0;
