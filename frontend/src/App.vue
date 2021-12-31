@@ -18,5 +18,6 @@ export default {
 <style>
 body {
   margin: 0px;
+  background: #663EFF;
 }
 </style>

@@ -7,7 +7,8 @@ import Routes from './routers'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* import specific icons */
-import { faBasketShopping, faHexagonPlus } from '@fortawesome/free-solid-svg-icons'
+import { faBasketShopping } from '@fortawesome/free-solid-svg-icons'
+import { faHexagonPlus } from '@fortawesome/free-solid-svg-icons'
 
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
