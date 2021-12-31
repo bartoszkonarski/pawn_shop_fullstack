@@ -2,7 +2,10 @@
   <section>
 
       <div class="list-left-panel">
-       IDDDD: {{activeId}}
+        <div class="list-left-panel-edit-item">
+          <div class="list-left-panel-edit-item-img"></div>
+          <div class="list-left-panel-edit-item-info"></div>
+        </div>
       </div>
 
       <div class="list-right-panel">
@@ -16,7 +19,7 @@
         :id="item.id"
         v-for="item in items" 
         :key="item.id"
-        v-on:edit="changeEdit"
+        v-on:edit="changeEdit(item.id)"
         />
         <br>
       </div>
@@ -47,10 +50,15 @@ export default {
     }
   },
   methods: {
-    changeEdit: () => {
-      this.activeId = 1
+    changeEdit: function(prop) {
+      this.activeId = prop
     }
-  }
+  },
+  watch: {
+    activeId: function(){
+
+    },
+  },
 }
 </script>
  
@@ -73,5 +81,8 @@ export default {
     padding: 4% 2%;
     background: #18ADD6; 
     width:61%; 
+  }
+  .list-left-panel-edit-item{
+    
   }
 </style>
