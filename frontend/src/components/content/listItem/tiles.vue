@@ -59,6 +59,16 @@ export default {
         border-radius: 10px;
     }
     .tiles-field-info-button{
-
+        width: 20%;
+        height: 14%;
+        background: rgb(70, 44, 70);
+        color: white;
+        border-radius: 15px;
+        transition: .4s;
+    }
+    .tiles-field-info-button:hover{
+        background: rgb(153, 87, 153);
+        color:black;
+        border-radius: 5px;
     }
 </style>

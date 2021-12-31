@@ -2,10 +2,7 @@
   <section>
 
       <div class="list-left-panel">
-        <div class="list-left-panel-edit-item">
-          <div class="list-left-panel-edit-item-img"></div>
-          <div class="list-left-panel-edit-item-info"></div>
-        </div>
+        <EditTiles v-if="activeId"/>
       </div>
 
       <div class="list-right-panel">
@@ -29,11 +26,13 @@
 
 <script>
 import tiles from './listItem/tiles.vue'
+import editTiles from './listItem/editTiles.vue' //VS Code ocipiał
 
 export default {
   name: 'listItem',
   components: {
     Tiles: tiles,
+    EditTiles: editTiles,
   },
   data: () => {
     return{
@@ -47,6 +46,7 @@ export default {
         {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7},
       ],
       activeId: 0,
+      activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7}
     }
   },
   methods: {
@@ -65,7 +65,8 @@ export default {
 <style >
   .list-left-panel{
     display: flex;
-    position: fixed;
+    flex-direction:column;
+    align-items: center;
     width:35%;
     height: 84vh;
     background: #663EFF;
@@ -83,6 +84,6 @@ export default {
     width:61%; 
   }
   .list-left-panel-edit-item{
-    
+
   }
 </style>
