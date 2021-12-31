@@ -25,7 +25,7 @@ export default {
   name: 'tiles',
   components: {
   },
-  emits: [],
+  emits: ['accepted'],
   props: ['name','cost','state','info','brand','newCost','id'],
   data: function () {
     return {
