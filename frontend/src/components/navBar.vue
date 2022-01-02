@@ -1,9 +1,10 @@
 <template>
   <section 
   class="nav-container"
+  :class="{'nav-container-div': !logged}"
   >
-    <div class="nav-logo">
-      <img src="../../src/assets/lombard-logo.png" alt="">
+    <div class="nav-logo" >
+      <img src="../../src/assets/lombard-logo.png" alt="" :class="{'nav-logo-img': !logged}">
     </div>
     
     <div class="nav-link-container" v-show="logged">
@@ -29,7 +30,9 @@
     <div class="nav-user-accond" v-show="logged">
       <div class="nav-accond-info">
         {{accondName}}      
-        <router-link to="/log">
+        <router-link 
+        to="/log" 
+        @click="$emit('logOut')">
           <div style="background-color: #EB714F">
             LogOut
             <!-- <font-awesome-icon icon="fa-solid fa-calendar-circle-exclamation" /> -->
@@ -51,11 +54,11 @@ export default {
   name: 'navBar',
   components: {
   },
+  props:['logged'],
   data: () => {
       return{
         addItem: addItem,
         listItem: listItem,
-        logged: true,
         accondName:"user_name"
       }
   },
@@ -80,7 +83,7 @@ export default {
   width: 20%;
   height: 50%;
   margin: 3% 5%;
-  float:inline-start;
+  float: inline-start;
   text-align: center;
   border-radius: 15px;
   box-shadow: -1px 15px 60px 0px rgba(0,0,0,0.75);
@@ -109,7 +112,16 @@ export default {
   padding: 10px;
   margin-top: 5%;
 }
-
+.nav-container-div{
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav-logo-img{
+  margin-top:20%;
+  transform: scale(2);
+}
 img{
   width: 30vw;
   height: 14vh;

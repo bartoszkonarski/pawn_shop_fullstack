@@ -1,7 +1,12 @@
 <template>
   <section id="app">
-    <navBar> </navBar>
-    <router-view></router-view>
+    <navBar 
+    :logged="logged"
+    @logOut="changeLogState"
+    > </navBar>
+    <router-view
+    :logged="logged"
+    ></router-view>
   </section>
 </template>
 
@@ -11,6 +16,16 @@ export default {
   name: 'App',
   components: {
     navBar: navBar,
+  },
+  data: function() {
+    return{
+      logged: true,
+    }
+  },
+  methods:{
+    changeLogState: function(){
+      this.logged = false;
+    }
   }
 }
 </script>

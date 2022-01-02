@@ -2,10 +2,20 @@
   <section>
 
       <div class="list-left-panel">
-       IDDDD: {{activeId}}
+        <AddItem
+          @info="addItemObj($event)"
+        />
       </div>
 
       <div class="list-right-panel">
+        <Tiles
+        :name="newItem.name"
+        :brand="newItem.brand"
+        :state="newItem.state"
+        :info="newItem.info"
+        :cost="newItem.cost"
+        :newCost="newItem.newCost"
+        />
         <Tiles 
         :name="item.name" 
         :brand="item.brand" 
@@ -24,11 +34,13 @@
 
 <script>
 import tiles from './listItem/tiles.vue'
+import addItem from './addItem/addTiles.vue'
 
 export default {
   name: 'listItem',
   components: {
     Tiles: tiles,
+    AddItem: addItem,
   },
   data: () => {
     return{
@@ -41,14 +53,20 @@ export default {
         {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 6},
         {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7},
       ],
-      activeId: 0,
+      newItem: {name: '', cost: 0, state: '', info: '', brand: '', newCost: 0, id: null}
     }
   },
   methods: {
-
+    addItemObj: function(newItemChild){
+      this.newItem = newItemChild;
+      // console.log(this.newItem.name+" "+newItemChild.name);
+    }
   },
   watch: {
 
+  },
+  beforeMount(){
+    if(this.logged) window.location.href = "http://localhost:8080/#/";
   },
 }
 </script>
