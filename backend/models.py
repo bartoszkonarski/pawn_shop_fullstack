@@ -36,6 +36,21 @@ class UserSchema(ma.Schema):
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    cost = db.Column(db.Float, nullable = False)
+    state = db.Column(db.String(120), nullable = False)
+    info = db.Column(db.String(120),nullable = False)
+    brand = db.Column(db.String(120),nullable = False)
+    newCost = db.Column(db.Float, nullable = False)
+
+class ItemSchema(ma.Schema):
+    class Meta:
+        fields = ('name', 'cost', 'state', 'info','brand','newCost','id')
+
+item_schema = ItemSchema()
+items_schema = ItemSchema(many=True)
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked_tokens'
     id = db.Column(db.Integer, primary_key = True)

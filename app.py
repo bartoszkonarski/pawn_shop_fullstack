@@ -25,10 +25,11 @@ jwt = JWTManager(app)
 
 api = Api(app)
 
-from backend.resources import UserLogin,AllUsers,UserRegistration,UserLogoutAccess, SecretResource
+from backend.resources import AllItems, UserLogin,AllUsers,UserRegistration,UserLogoutAccess, SecretResource
 
 api.add_resource(UserRegistration, '/registration')
 api.add_resource(AllUsers, '/users')
+api.add_resource(AllItems, '/items')
 api.add_resource(UserLogin, '/login')
 api.add_resource(UserLogoutAccess, '/logout')
 api.add_resource(SecretResource, '/secret')

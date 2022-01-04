@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from backend.models import db, User, user_schema, users_schema, RevokedTokenModel
+from backend.models import Item, db, User, user_schema, users_schema, RevokedTokenModel, items_schema
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt
 from datetime import timedelta
 
@@ -73,3 +73,14 @@ class SecretResource(Resource):
             return {'message': 'Access Denied'}, 403
         else:
             return {'answer': 42}
+
+
+class AllItems(Resource):
+    @jwt_required()
+    def get(self):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        all_items = Item.query.all()
+        result = items_schema.dump(all_items)
+        return result
