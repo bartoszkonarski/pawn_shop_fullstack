@@ -34,6 +34,7 @@ export default {
     Tiles: tiles,
     EditTiles: editTiles,
   },
+  props: ['logged'],
   data: () => {
     return{
       items: [
@@ -56,11 +57,10 @@ export default {
   },
   watch: {
     activeId: function(){
-
     },
   },
   beforeMount(){
-    if(this.logged) window.location.href = "http://localhost:8080/#/";
+    if(!this.logged) window.location.href = "http://localhost:8080/#/log";
   },
 }
 </script>

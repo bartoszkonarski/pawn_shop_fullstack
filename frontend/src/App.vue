@@ -23,10 +23,11 @@ export default {
     }
   },
   methods:{
-    changeLogState: function(){
+    changeLogState: function() {
       this.logged = false;
+      window.location.href="http://localhost:8080/#/log"
     }
-  }
+  },
 }
 </script>
 

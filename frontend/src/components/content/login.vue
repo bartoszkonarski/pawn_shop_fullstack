@@ -15,7 +15,7 @@ export default {
     }
   },
   beforeMount(){
-    if(this.logged) window.location.href = "http://localhost:8080/#/";
+    if(this.logged == true) window.location.href = "http://localhost:8080/#/";
   },
 }
 </script>
