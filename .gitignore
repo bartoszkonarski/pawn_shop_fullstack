@@ -128,6 +128,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+
+# Test files
+test.py
+
 ### Vue
 .DS_Store
 node_modules
@@ -151,3 +155,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
