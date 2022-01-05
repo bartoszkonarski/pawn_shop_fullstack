@@ -19,7 +19,7 @@ export default {
   },
   data: function() {
     return{
-      logged: true,
+      logged: false,
     }
   },
   methods:{

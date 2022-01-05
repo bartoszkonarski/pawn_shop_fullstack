@@ -1,6 +1,10 @@
 <template>
   <section>
-      Działa! {{logged}}
+      <form action="http://127.0.0.1:5000/login" method="POST">
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <input type="submit"/>
+      </form>
   </section>
 </template>
 
