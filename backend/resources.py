@@ -33,8 +33,7 @@ class AllUsers(Resource):
 
     # def delete(self):
     #     return {'message': 'Delete all users'}
-
-
+        
 class UserLogin(Resource):
     def post(self):
         current_user = User.find_by_username(request.json['username'])
@@ -84,3 +83,32 @@ class AllItems(Resource):
         all_items = Item.query.all()
         result = items_schema.dump(all_items)
         return result
+
+class GetItem(Resource):
+    @jwt_required()
+    def get(self, item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        result = Item.query.filter_by(id=item_id)
+        return items_schema.dump(result)
+
+class AddItem(Resource):
+    @jwt_required()
+    def post(self):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        try:
+            item = Item(name = request.json['name'],
+                        cost = float(request.json['cost']),
+                        state = request.json['state'],
+                        info = request.json['info'],
+                        brand = request.json['brand'],
+                        newCost = float(request.json['newCost'])
+                    )
+            db.session.add(item)
+            db.session.commit()
+            return {'message': 'Item added successfully'}
+        except:
+            return {'message': 'Something went wrong'}, 500
