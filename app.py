@@ -3,11 +3,12 @@ from flask_migrate import Migrate
 from flask import Flask
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
-
+from flask_cors import CORS
 from backend.models import db, ma
 
 # APP + DB
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backend/database.db'
 db.init_app(app)
 ma.init_app(app)
