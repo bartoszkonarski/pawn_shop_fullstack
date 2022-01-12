@@ -5,6 +5,7 @@
         <AddItem
           @info="addItemObj($event)"
         />
+        {{logged}}
       </div>
 
       <div class="list-right-panel">
@@ -63,11 +64,8 @@ export default {
       // console.log(this.newItem.name+" "+newItemChild.name);
     }
   },
-  watch: {
-
-  },
   beforeMount(){
-    if(!this.logged) window.location.href = "http://localhost:8080/#/log";
+    if(this.logged == false) this.$router.push('/log')
   },
 }
 </script>

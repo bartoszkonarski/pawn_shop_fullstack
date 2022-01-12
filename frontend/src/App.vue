@@ -2,11 +2,13 @@
   <section id="app">
     <navBar 
     :logged="logged"
-    @logOut="changeLogState"
+    @logOut="loggOut()"
     > </navBar>
     <router-view
     :logged="logged"
+    @logIn="loggIn(tokken)"
     ></router-view>
+    {{logged}}
   </section>
 </template>
 
@@ -20,14 +22,33 @@ export default {
   data: function() {
     return{
       logged: false,
+      tokken: "",
     }
   },
   methods:{
-    changeLogState: function() {
+    loggOut: function() {
       this.logged = false;
-      window.location.href="http://localhost:8080/#/log"
-    }
+      this.tokken = "";
+      this.$router.push('/log');
+    },
+    loggIn: function(tokken) {
+      this.logged = true;
+      this.tokken = tokken;
+      this.$router.push('/');
+      console.log(tokken)
+    },
+    // testMet: function() {
+    //   console.log("Bump")
+    // }
   },
+  // watch:{
+  //   logged: (val) => { 
+  //     console.log("watch method")
+  //     // window.location.href="https://www.google.com/"
+  //     if(val) this.$router.push('/');
+  //     if(!val) this.$router.push('/log')
+  //   }
+  // }
 }
 </script>
 

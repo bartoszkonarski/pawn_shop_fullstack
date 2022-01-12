@@ -3,6 +3,7 @@
 
       <div class="list-left-panel">
         <EditTiles v-if="activeId"/>
+        {{logged}}
       </div>
 
       <div class="list-right-panel">
@@ -55,12 +56,8 @@ export default {
       this.activeId = prop
     }
   },
-  watch: {
-    activeId: function(){
-    },
-  },
   beforeMount(){
-    if(!this.logged) window.location.href = "http://localhost:8080/#/log";
+    if(this.logged == false) this.$router.push('/log')
   },
 }
 </script>

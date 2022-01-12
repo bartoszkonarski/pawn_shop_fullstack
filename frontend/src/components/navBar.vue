@@ -30,14 +30,13 @@
     <div class="nav-user-accond" v-show="logged">
       <div class="nav-accond-info">
         {{accondName}}      
-        <router-link
-        to="/log"
-        @click="$emit('logOut')">
-          <div style="background-color: #EB714F">
+        <button 
+        style="background-color: #EB714F; width:80%"
+        @click="$emit('logOut')"
+        >
             LogOut
             <!-- <font-awesome-icon icon="fa-solid fa-calendar-circle-exclamation" /> -->
-          </div>
-        </router-link>
+        </button>
       </div>
 
     </div>
