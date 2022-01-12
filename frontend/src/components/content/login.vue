@@ -5,7 +5,6 @@
         <input type="text" name="password" v-model="password">
         <input type="button"  value="Zaloguj!" @click="postMethod"/>
       </form>
-      {{response}}
   </section>
 </template>
 

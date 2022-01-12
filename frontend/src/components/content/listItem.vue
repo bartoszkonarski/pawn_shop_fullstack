@@ -3,7 +3,6 @@
 
       <div class="list-left-panel">
         <EditTiles v-if="activeId"/>
-        {{logged}}
       </div>
 
       <div class="list-right-panel">

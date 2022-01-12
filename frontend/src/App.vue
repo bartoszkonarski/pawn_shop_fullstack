@@ -6,9 +6,9 @@
     > </navBar>
     <router-view
     :logged="logged"
-    @logIn="loggIn(tokken)"
+    @logIn="loggIn($emit)"
     ></router-view>
-    {{logged}}
+    {{tokken}}
   </section>
 </template>
 
@@ -33,9 +33,8 @@ export default {
     },
     loggIn: function(tokken) {
       this.logged = true;
-      this.tokken = tokken;
+      this.tokken = tokken.tokken;
       this.$router.push('/');
-      console.log(tokken)
     },
     // testMet: function() {
     //   console.log("Bump")

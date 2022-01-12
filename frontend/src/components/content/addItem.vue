@@ -5,7 +5,6 @@
         <AddItem
           @info="addItemObj($event)"
         />
-        {{logged}}
       </div>
 
       <div class="list-right-panel">
