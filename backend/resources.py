@@ -38,7 +38,7 @@ class UserLogin(Resource):
     def post(self):
         current_user = User.find_by_username(request.json['username'])
         if not current_user: # remove this for security issue.
-            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])}
+            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])},404
 
         if User.verify_hash(request.json['password'], current_user.password):
             access_token = create_access_token(identity = request.json['username'], expires_delta=timedelta(days=30))
@@ -47,7 +47,7 @@ class UserLogin(Resource):
                     'access_token': access_token
                     }
         else:
-            return {'message': 'Wrong credentials'}
+            return {'message': 'Wrong credentials'},404
 
 
 class UserLogoutAccess(Resource):
