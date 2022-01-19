@@ -34,7 +34,7 @@ export default {
     Tiles: tiles,
     EditTiles: editTiles,
   },
-  props: ['logged'],
+  props: ['logged','tokken'],
   data: () => {
     return{
       items: [

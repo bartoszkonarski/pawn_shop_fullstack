@@ -42,7 +42,7 @@ export default {
     Tiles: tiles,
     AddItem: addItem,
   },
-  props: ['logged'],
+  props: ['logged','tokken'],
   data: () => {
     return{
       items: [

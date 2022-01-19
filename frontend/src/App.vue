@@ -6,14 +6,14 @@
     > </navBar>
     <router-view
     :logged="logged"
-    @logIn="loggIn($emit)"
+    @logIn="loggIn($event)"
     ></router-view>
-    {{tokken}}
   </section>
 </template>
 
 <script>
 import navBar from './components/navBar.vue';
+
 export default {
   name: 'App',
   components: {
@@ -28,12 +28,14 @@ export default {
   methods:{
     loggOut: function() {
       this.logged = false;
-      this.tokken = "";
+      this.$session.destroy();
       this.$router.push('/log');
     },
     loggIn: function(tokken) {
+      this.$session.start();
       this.logged = true;
-      this.tokken = tokken.tokken;
+      this.$session.set('tokken',tokken)
+      console.log("Próba sesji: ", this.$session.get('tokken'));
       this.$router.push('/');
     },
     // testMet: function() {

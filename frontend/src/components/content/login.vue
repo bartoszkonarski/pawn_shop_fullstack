@@ -1,9 +1,9 @@
 <template>
   <section>
       <form>
-        <input type="text" name="username" v-model="login">
-        <input type="text" name="password" v-model="password">
-        <input type="button"  value="Zaloguj!" @click="postMethod"/>
+        <input type="text" name="username" class="login-input-text" placeholder="Login" v-model="login">
+        <input type="text" name="password" class="login-input-text" placeholder="Hasło" v-model="password">
+        <input type="button"  value="Zaloguj!" class="login-input-button" @click="postMethod"/>
       </form>
   </section>
 </template>
@@ -42,9 +42,11 @@
         // this.loginProc(this.logedStatus)
        },
       loginProc(val, tokken){
-        console.log("Zmiana statusu logowania!")
-        if(val == 200) this.$emit('logIn',tokken);
-        else alert(val);
+        if(val == 200)
+        {
+          this.$emit('logIn',tokken);
+        } 
+        else alert("Błąd logowania! Upewnij się że wpisałeś poprawne dane!");
       },
       // testMet: function() {
       //   this.$router.push('/')
@@ -60,5 +62,27 @@
 body {
   margin: 0px;
   background: #663EFF;
+}
+input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.login-input-text{
+  border-radius: 4px;
+  height: 3vh;
+  width: 10vw;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  transition: .3s;
+}
+.login-input-text:focus{
+  width: 15vw;
+
+}
+.login-input-button{
+  border-radius: 4px;
+  height: 3vh;
+  width: 5vw;
 }
 </style>
