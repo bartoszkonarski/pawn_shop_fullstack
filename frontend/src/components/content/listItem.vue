@@ -2,7 +2,10 @@
   <section>
 
       <div class="list-left-panel">
-        <EditTiles v-if="activeId"/>
+        <EditTiles 
+        v-if="activeId"
+        :id="activeId"
+        />
       </div>
 
       <div class="list-right-panel">
@@ -16,7 +19,8 @@
         :id="item.id"
         v-for="item in items" 
         :key="item.id"
-        v-on:edit="changeEdit(item.id)"
+        v-on:edit="editItem($event)"
+        v-on:del="deleteItem($event)"
         />
         <br>
       </div>
@@ -27,6 +31,7 @@
 <script>
 import tiles from './listItem/tiles.vue'
 import editTiles from './listItem/editTiles.vue' //VS Code ocipiał
+import axios from 'axios';
 
 export default {
   name: 'listItem',
@@ -37,26 +42,35 @@ export default {
   props: ['logged','tokken'],
   data: () => {
     return{
-      items: [
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 1},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 2},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 3},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 4},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 5},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 6},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7},
-      ],
+      items: [],
       activeId: 0,
       activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7}
     }
   },
   methods: {
-    changeEdit: function(prop) {
-      this.activeId = prop
+    editItem: function(id) {
+      this.activeId = id
+    },
+    deleteItem: function(id){
+      /// Funkcja która usuwa przedmioty.
+      id
     }
   },
   beforeMount(){
-    if(this.logged == false) this.$router.push('/log')
+    if(!this.$session.exists() || this.$session.get('tokken') == "") this.$router.push('/log')
+    axios.get(
+    'http://127.0.0.1:5000/items',
+    { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+    )
+    .then(response => (
+      console.log(response.data),
+      this.items = response.data
+      ))
+    .catch(error => (
+      console.log(error.response),
+      this.response = error.response
+      ))
+    
   },
 }
 </script>

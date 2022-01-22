@@ -53,7 +53,7 @@
       // }
     },
     beforeMount(){
-      if(this.logged == true) this.$router.push('/')
+      if(this.$session.exists()) this.$router.push('/')
     },
   }
 </script>
