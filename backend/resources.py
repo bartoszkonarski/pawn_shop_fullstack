@@ -105,7 +105,23 @@ class GetItem(Resource):
             return {'message': f'Item: {item_id} succesfully deleted'}
         except:
             return {'message': 'Something went wrong'}, 500
+    
+    @jwt_required()
+    def put(self,item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
 
+        item = Item.query.filter_by(id=item_id).first()
+        item.name = request.json['name']
+        item.cost = float(request.json['cost'])
+        item.state = request.json['state']
+        item.info = request.json['info']
+        item.brand = request.json['brand']
+        item.newCost = float(request.json['newCost'])
+        
+        db.session.commit()
+        return {'message': f'Item: {item_id} succesfully edited'}
 
 class AddItem(Resource):
     @jwt_required()
