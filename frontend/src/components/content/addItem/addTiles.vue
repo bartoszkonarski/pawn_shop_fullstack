@@ -60,6 +60,7 @@
 
             <button 
             class="edit-tiles-button"
+            @click="$emit('addClick')"
             >
                 <b>Dodaj!</b> 
             </button>
@@ -75,7 +76,7 @@ export default {
   },
   data: function () {
     return {
-        newItem: {name: '', cost: '', state: '', info: '', brand: '', newCost: NaN, id: NaN}
+        newItem: {name: '', cost: '', state: '', info: '', brand: '', newCost: NaN}
     }
   },
 //   methods: {

@@ -11,9 +11,14 @@
            <p>Cena zakupu: {{cost}}</p>
            <p>Aktualna cena: {{newCost}}</p>
             <button 
-            @click="$emit('edit')" 
+            @click="$emit('edit',id)" 
             class="tiles-field-info-button">
                 Edycja
+            </button>
+            <button 
+            @click="$emit('del',id)" 
+            class="tiles-field-info-button">
+                Usuń
             </button>
         </div>
     </div>

@@ -4,6 +4,7 @@
       <div class="list-left-panel">
         <AddItem
           @info="addItemObj($event)"
+          @addClick="addItem"
         />
       </div>
 
@@ -23,7 +24,6 @@
         :info="item.info" 
         :cost="item.cost" 
         :newCost="item.newCost" 
-        :id="item.id"
         v-for="item in items" 
         :key="item.id"
         />
@@ -35,6 +35,7 @@
 <script>
 import tiles from './listItem/tiles.vue'
 import addItem from './addItem/addTiles.vue'
+import axios from 'axios';
 
 export default {
   name: 'listItem',
@@ -42,32 +43,46 @@ export default {
     Tiles: tiles,
     AddItem: addItem,
   },
-  props: ['logged'],
   data: () => {
     return{
-      items: [
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 1},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 2},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 3},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 4},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 5},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 6},
-        {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7},
-      ],
-      newItem: {name: '', cost: 0, state: '', info: '', brand: '', newCost: 0, id: null}
+      items: [],
+      newItem: {name: '', cost: 0, state: '', info: '', brand: '', newCost: 0}
     }
   },
   methods: {
     addItemObj: function(newItemChild){
       this.newItem = newItemChild;
-      // console.log(this.newItem.name+" "+newItemChild.name);
+    },
+    addItem: function(){
+      axios.post(
+      'http://127.0.0.1:5000/item',
+      this.newItem,
+      { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+      )
+      .then(response => (
+        console.log(response.data)
+        ))
+      .catch(error => (
+        console.log(error.response)
+        ))
+      window.location.reload();
     }
   },
-  watch: {
-
-  },
   beforeMount(){
-    if(!this.logged) window.location.href = "http://localhost:8080/#/log";
+    if(!this.$session.exists() || this.$session.get('tokken') == "") this.$router.push('/log')
+
+    axios.get(
+    'http://127.0.0.1:5000/items',
+    { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+    )
+    .then(response => (
+      console.log(response.data),
+      this.items = response.data
+      ))
+    .catch(error => (
+      console.log(error.response),
+      this.response = error.response
+      ))
   },
 }
 </script>

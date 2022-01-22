@@ -1,13 +1,13 @@
 <template>
   <section 
   class="nav-container"
-  :class="{'nav-container-div': !logged}"
+  :class="{'nav-container-div': !$session.exists()}"
   >
     <div class="nav-logo" >
-      <img src="../../src/assets/lombard-logo.png" alt="" :class="{'nav-logo-img': !logged}">
+      <img src="../../src/assets/lombard-logo.png" alt="" :class="{'nav-logo-img': !$session.exists()}">
     </div>
     
-    <div class="nav-link-container" v-show="logged">
+    <div class="nav-link-container" v-show="$session.exists()">
 
       <router-link to="/">
         <div class="nav-tab" style="background-color: #96F04D">
@@ -27,15 +27,15 @@
         </div>
       </router-link>
     </div>
-    <div class="nav-user-accond" v-show="logged">
+    <div class="nav-user-accond" v-show="$session.exists()">
       <div class="nav-accond-info">
         {{accondName}}      
-        <button
-        @click="$emit('logOut')">
-          <div style="background-color: #EB714F">
+        <button 
+        style="background-color: #EB714F; width:80%"
+        @click="$emit('logOut')"
+        >
             LogOut
             <!-- <font-awesome-icon icon="fa-solid fa-calendar-circle-exclamation" /> -->
-          </div>
         </button>
       </div>
 

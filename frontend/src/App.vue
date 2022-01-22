@@ -1,17 +1,17 @@
 <template>
   <section id="app">
     <navBar 
-    :logged="logged"
-    @logOut="changeLogState"
+    @logOut="loggOut()"
     > </navBar>
     <router-view
-    :logged="logged"
+    @logIn="loggIn($event)"
     ></router-view>
   </section>
 </template>
 
 <script>
 import navBar from './components/navBar.vue';
+
 export default {
   name: 'App',
   components: {
@@ -19,14 +19,20 @@ export default {
   },
   data: function() {
     return{
-      logged: true,
     }
   },
   methods:{
-    changeLogState: function() {
-      this.logged = false;
-      window.location.href="http://localhost:8080/#/log"
-    }
+    loggOut: function() {
+      this.$session.destroy();
+      this.$router.push('/log');
+      window.location.reload();
+    },
+    loggIn: function(tokken) {
+      this.$session.start();
+      this.$session.set('tokken',tokken)
+      this.$router.push('/');
+      window.location.reload();
+    },
   },
 }
 </script>
