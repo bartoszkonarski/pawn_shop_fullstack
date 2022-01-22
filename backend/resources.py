@@ -38,7 +38,7 @@ class UserLogin(Resource):
     def post(self):
         current_user = User.find_by_username(request.json['username'])
         if not current_user: # remove this for security issue.
-            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])},504
+            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])},404
 
         if User.verify_hash(request.json['password'], current_user.password):
             access_token = create_access_token(identity = request.json['username'], expires_delta=timedelta(days=30))
@@ -47,7 +47,7 @@ class UserLogin(Resource):
                     'access_token': access_token
                     }
         else:
-            return {'message': 'Wrong credentials'},504
+            return {'message': 'Wrong credentials'},404
 
 
 class UserLogoutAccess(Resource):
@@ -92,6 +92,20 @@ class GetItem(Resource):
             return {'message': 'Access Denied'}, 403
         result = Item.query.filter_by(id=item_id)
         return items_schema.dump(result)
+
+    @jwt_required()
+    def delete(self, item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+            
+        try:
+            Item.query.filter_by(id=item_id).delete()
+            db.session.commit()
+            return {'message': f'Item: {item_id} succesfully deleted'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+
 
 class AddItem(Resource):
     @jwt_required()
