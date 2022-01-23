@@ -22,12 +22,19 @@
         :brand="item.brand" 
         :state="item.state" 
         :info="item.info" 
+<<<<<<< HEAD
         :cost="item.deposit" 
         :days="item.days_left" 
         :id="item.id"
         v-for="item in items" 
         :key="item.id"
         @del="deleteItem($event)"
+=======
+        :cost="item.cost" 
+        :days="item.days_left" 
+        v-for="item in items" 
+        :key="item.id"
+>>>>>>> fb7405a (Fixed summary)
         />
       </div>
   </section>
@@ -55,7 +62,10 @@ export default {
       this.newItem = newItemChild;
     },
     addItem: function(){
+<<<<<<< HEAD
     console.log(this.newItem)
+=======
+>>>>>>> fb7405a (Fixed summary)
       axios.post(
       'http://127.0.0.1:5000/deposit_item',
       this.newItem,
@@ -67,6 +77,7 @@ export default {
       .catch(error => (
         console.log(error.response)
         ))
+<<<<<<< HEAD
        setTimeout(() => {window.location.reload()}, 200)
     },
     deleteItem: function(id){
@@ -82,6 +93,9 @@ export default {
             ))
         console.log(id)
         setTimeout(() => {window.location.reload()}, 200)
+=======
+      setTimeout(() => {window.location.reload()}, 500)
+>>>>>>> fb7405a (Fixed summary)
     }
   },
   beforeMount(){

@@ -41,7 +41,11 @@
                 <input 
                 type="number" 
                 class="edit-tiles-input"
+<<<<<<< HEAD
                 v-model="newItem.deposit"
+=======
+                v-model="newItem.cost"
+>>>>>>> fb7405a (Fixed summary)
                 v-on:input="$emit('info',newItem)"
                 >
             </label> <br>
@@ -64,7 +68,11 @@ export default {
   },
   data: function () {
     return {
+<<<<<<< HEAD
         newItem: {name: '', deposit: 0, state: '', info: '', brand: ''}
+=======
+        newItem: {name: '', cost: '', state: '', info: '', brand: ''}
+>>>>>>> fb7405a (Fixed summary)
     }
   },
 //   methods: {

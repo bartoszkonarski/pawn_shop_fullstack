@@ -3,16 +3,8 @@
 
       <div class="list-left-panel">
         <EditTiles 
-        v-if="activeEdit"
-        :name="activeItem.name" 
-        :brand="activeItem.brand" 
-        :state="activeItem.state" 
-        :info="activeItem.info" 
-        :cost="activeItem.cost" 
-        :newCost="activeItem.newCost" 
-        :id="activeItem.id"
-        @editClick="editClick($event)"
-        @cancelClick="cancelClick"
+        v-if="activeId"
+        :id="activeId"
         />
       </div>
 
@@ -27,8 +19,8 @@
         :id="item.id"
         v-for="item in items" 
         :key="item.id"
-        @edit="editItem($event)"
-        @del="deleteItem($event)"
+        v-on:edit="editItem($event)"
+        v-on:del="deleteItem($event)"
         />
         <br>
       </div>
@@ -51,22 +43,13 @@ export default {
   data: () => {
     return{
       items: [],
-      activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 0},
-      activeEdit:false,
+      activeId: 0,
+      activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7}
     }
   },
   methods: {
-    editItem: function(itemToEdit) {
-      this.activeItem.name = itemToEdit.name
-      this.activeItem.cost = itemToEdit.cost
-      this.activeItem.state = itemToEdit.state
-      this.activeItem.info = itemToEdit.info
-      this.activeItem.brand = itemToEdit.brand
-      this.activeItem.newCost = itemToEdit.newCost
-      this.activeItem.id = itemToEdit.id
-      this.activeEdit = true;
-      console.log(itemToEdit.name, itemToEdit.cost, itemToEdit.state, itemToEdit.info, itemToEdit.brand, itemToEdit.newCost, itemToEdit.id)
-      console.log(this.activeItem.name, this.activeItem.cost, this.activeItem.state, this.activeItem.info, this.activeItem.brand, this.activeItem.newCost, this.activeItem.id)
+    editItem: function(id) {
+      this.activeId = id
     },
     deleteItem: function(id){
       // Funkcja która usuwa przedmioty.

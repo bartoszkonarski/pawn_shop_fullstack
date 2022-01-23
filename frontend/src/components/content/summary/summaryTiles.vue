@@ -20,6 +20,7 @@
 <script>
 
     export default {
+<<<<<<< HEAD
         name: 'tiles',
         components: {
         },
@@ -30,6 +31,18 @@
             }
         }
     }
+=======
+    name: 'tiles',
+    components: {
+    },
+    emits: ['accepted'],
+    props: ['name','cost','state','info','brand', 'days','id'],
+    data: function () {
+        return {
+        }
+    }
+    }
+>>>>>>> fb7405a (Fixed summary)
 </script>
 
 <style scoped>
