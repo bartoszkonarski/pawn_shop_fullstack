@@ -6,6 +6,7 @@
           @info="addItemObj($event)"
           @addClick="addItem()"
         />
+        
       </div>
 
       <div class="list-right-panel">
@@ -14,26 +15,27 @@
         :brand="newItem.brand"
         :state="newItem.state"
         :info="newItem.info"
-        :cost="newItem.cost"
-        :newCost="newItem.newCost"
+        :cost="newItem.deposit"
         />
         <Tiles 
         :name="item.name" 
         :brand="item.brand" 
         :state="item.state" 
         :info="item.info" 
-        :cost="item.cost" 
-        :newCost="item.newCost" 
+        :cost="item.deposit" 
+        :days="item.days_left" 
+        :id="item.id"
         v-for="item in items" 
         :key="item.id"
+        @del="deleteItem($event)"
         />
       </div>
   </section>
 </template>
 
 <script>
-import tiles from './listItem/tiles.vue'
-import addItem from './addItem/addTiles.vue'
+import tiles from './summary/summaryTiles.vue'
+import addItem from './summary/summaryAddTiles.vue'
 import axios from 'axios';
 
 export default {
@@ -45,7 +47,7 @@ export default {
   data: () => {
     return{
       items: [],
-      newItem: {name: '', cost: 0, state: '', info: '', brand: '', newCost: 0}
+      newItem: {name: '', deposit: 0, state: '', info: '', brand: ''}
     }
   },
   methods: {
@@ -53,8 +55,9 @@ export default {
       this.newItem = newItemChild;
     },
     addItem: function(){
+    console.log(this.newItem)
       axios.post(
-      'http://127.0.0.1:5000/item',
+      'http://127.0.0.1:5000/deposit_item',
       this.newItem,
       { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
       )
@@ -64,14 +67,28 @@ export default {
       .catch(error => (
         console.log(error.response)
         ))
-      setTimeout(() => {window.location.reload()}, 500)
+       setTimeout(() => {window.location.reload()}, 200)
+    },
+    deleteItem: function(id){
+        axios.delete(
+        'http://127.0.0.1:5000/deposit_item/'+id,
+        { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        )
+        .then(response => (
+            console.log(response.data)
+            ))
+        .catch(error => (
+            console.log(error.response)
+            ))
+        console.log(id)
+        setTimeout(() => {window.location.reload()}, 200)
     }
   },
   beforeMount(){
     if(!this.$session.exists() || this.$session.get('tokken') == "") this.$router.push('/log')
 
     axios.get(
-    'http://127.0.0.1:5000/items',
+    'http://127.0.0.1:5000/deposit_items',
     { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
     )
     .then(response => (
