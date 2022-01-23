@@ -1,8 +1,16 @@
 from flask_restful import Resource
 from flask import request
-from backend.models import Item, db, User, user_schema, users_schema, RevokedTokenModel, items_schema
+from backend.models import (Item, 
+                            db, 
+                            User, 
+                            users_schema, 
+                            RevokedTokenModel, 
+                            items_schema,
+                            DepositItem,
+                            deposit_items_schema
+)
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 class UserRegistration(Resource):
     def post(self):
@@ -84,7 +92,7 @@ class AllItems(Resource):
         result = items_schema.dump(all_items)
         return result
 
-class GetItem(Resource):
+class SingleItem(Resource):
     @jwt_required()
     def get(self, item_id):
         jti = get_jwt()['jti']
@@ -110,5 +118,83 @@ class AddItem(Resource):
             db.session.add(item)
             db.session.commit()
             return {'message': 'Item added successfully'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+    
+class AllDepositItems(Resource):
+    @jwt_required()
+    def get(self):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        all_items = DepositItem.query.all()
+        result = deposit_items_schema.dump(all_items)
+        return result
+
+class SingleDepositItem(Resource):
+    @jwt_required()
+    def get(self, deposit_item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        result = DepositItem.query.filter_by(id=deposit_item_id)
+        return deposit_items_schema.dump(result)
+
+    @jwt_required()
+    def delete(self, deposit_item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+            
+        try:
+            DepositItem.query.filter_by(id=deposit_item_id).delete()
+            db.session.commit()
+            return {'message': f'Item: {deposit_item_id} succesfully deleted'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+    
+class AddDepositItem(Resource):
+    @jwt_required()
+    def post(self):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        try:
+            time_change = timedelta(days=30)
+            expiry_dt = datetime.now() + time_change
+            item = DepositItem(name = request.json['name'],
+                        deposit = float(request.json['deposit']),
+                        state = request.json['state'],
+                        info = request.json['info'],
+                        brand = request.json['brand'],
+                        expiry_date = expiry_dt
+                    )
+            db.session.add(item)
+            db.session.commit()
+            return {'message': 'Item added successfully'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+
+class TransferExpiredItems(Resource):
+    @jwt_required()
+    def patch(self):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+        
+        try:
+            for deposit_item in DepositItem.query.all():
+                if deposit_item.expiry_date<=datetime.now():
+                    item = Item(name = deposit_item.name,
+                            cost = float(deposit_item.deposit),
+                            state = deposit_item.state,
+                            info = deposit_item.info,
+                            brand = deposit_item.brand,
+                            newCost = float(deposit_item.deposit*1.3)
+                        )
+                    db.session.add(item)
+                    DepositItem.query.filter_by(id=deposit_item.id).delete()
+                    db.session.commit()
+            return {'message': 'Expired deposit items have been marked as available for sale'}
         except:
             return {'message': 'Something went wrong'}, 500
