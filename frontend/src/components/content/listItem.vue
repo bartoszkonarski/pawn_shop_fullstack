@@ -3,8 +3,16 @@
 
       <div class="list-left-panel">
         <EditTiles 
-        v-if="activeId"
-        :id="activeId"
+        v-if="activeEdit"
+        :name="activeItem.name" 
+        :brand="activeItem.brand" 
+        :state="activeItem.state" 
+        :info="activeItem.info" 
+        :cost="activeItem.cost" 
+        :newCost="activeItem.newCost" 
+        :id="activeItem.id"
+        @editClick="editClick($event)"
+        @cancelClick="cancelClick"
         />
       </div>
 
@@ -19,8 +27,8 @@
         :id="item.id"
         v-for="item in items" 
         :key="item.id"
-        v-on:edit="editItem($event)"
-        v-on:del="deleteItem($event)"
+        @edit="editItem($event)"
+        @del="deleteItem($event)"
         />
         <br>
       </div>
@@ -43,17 +51,49 @@ export default {
   data: () => {
     return{
       items: [],
-      activeId: 0,
-      activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 7}
+      activeItem: {name: 'name', cost: 'cost', state: 'state', info: 'info', brand: 'brand', newCost: 'newCost', id: 0},
+      activeEdit:false,
     }
   },
   methods: {
-    editItem: function(id) {
-      this.activeId = id
+    editItem: function(itemToEdit) {
+      this.activeItem.name = itemToEdit.name
+      this.activeItem.cost = itemToEdit.cost
+      this.activeItem.state = itemToEdit.state
+      this.activeItem.info = itemToEdit.info
+      this.activeItem.brand = itemToEdit.brand
+      this.activeItem.newCost = itemToEdit.newCost
+      this.activeItem.id = itemToEdit.id
+      this.activeEdit = true;
+      console.log(itemToEdit.name, itemToEdit.cost, itemToEdit.state, itemToEdit.info, itemToEdit.brand, itemToEdit.newCost, itemToEdit.id)
+      console.log(this.activeItem.name, this.activeItem.cost, this.activeItem.state, this.activeItem.info, this.activeItem.brand, this.activeItem.newCost, this.activeItem.id)
     },
     deleteItem: function(id){
-      /// Funkcja która usuwa przedmioty.
+      // Funkcja która usuwa przedmioty.
       id
+    },
+    editClick: function(item){
+      var result = confirm("Czy jesteś pewien że chcesz edytować ten obiekt?");
+      if(result)
+      {
+          this.activeEdit = false;
+        // axios.get(
+        // 'http://127.0.0.1:5000/items',
+        // { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        // )
+        // .then(response => (
+        //   console.log(response.data),
+        //   this.items = response.data
+        //   ))
+        // .catch(error => (
+        //   console.log(error.response),
+        //   this.response = error.response
+        //   ))
+        item
+      }
+    },
+    cancelClick: function(){
+      this.activeEdit = false;
     }
   },
   beforeMount(){
