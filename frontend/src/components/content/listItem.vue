@@ -52,8 +52,42 @@ export default {
       this.activeId = id
     },
     deleteItem: function(id){
-      /// Funkcja która usuwa przedmioty.
-      id
+      // Funkcja która usuwa przedmioty.
+        axios.delete(
+        'http://127.0.0.1:5000/item/'+id,
+        { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        )
+        .then(response => (
+          console.log(response.data),
+          this.items = response.data
+          ))
+        .catch(error => (
+          console.log(error.response),
+          this.response = error.response
+          ))
+    },
+    editClick: function(item){
+      var result = confirm("Czy jesteś pewien że chcesz edytować ten obiekt?");
+      if(result)
+      {
+        this.activeEdit = false;
+        axios.put(
+        'http://127.0.0.1:5000/item/'+item.id,
+        item,
+        { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        )
+        .then(response => (
+          console.log(response.data),
+          this.items = response.data
+          ))
+        .catch(error => (
+          console.log(error.response),
+          this.response = error.response
+          ))
+      }
+    },
+    cancelClick: function(){
+      this.activeEdit = false;
     }
   },
   beforeMount(){
