@@ -1,11 +1,12 @@
 from flask_marshmallow import Marshmallow
+from marshmallow import fields
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import pbkdf2_sha256 as sha256
 from flask_jwt_extended import (create_access_token,
                                 create_refresh_token,
                                 jwt_required,
                                 get_jwt_identity)
-
+from datetime import datetime
 db = SQLAlchemy()
 ma = Marshmallow()
 
@@ -51,6 +52,25 @@ class ItemSchema(ma.Schema):
 
 item_schema = ItemSchema()
 items_schema = ItemSchema(many=True)
+
+class DepositItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    deposit = db.Column(db.Float, nullable = False)
+    state = db.Column(db.String(120), nullable = False)
+    info = db.Column(db.String(120),nullable = False)
+    brand = db.Column(db.String(120),nullable = False)
+    expiry_date = db.Column(db.DateTime,nullable = False)
+
+class DepositItemSchema(ma.Schema):
+    days_left = fields.Method("calculate_days_left")
+    def calculate_days_left(self, obj):
+        return (obj.expiry_date - datetime.now()).days
+    class Meta:
+        fields = ('name', 'deposit', 'state', 'info','brand','days_left','id')
+
+deposit_item_schema = DepositItemSchema()
+deposit_items_schema = DepositItemSchema(many=True)
 class RevokedTokenModel(db.Model):
     __tablename__ = 'revoked_tokens'
     id = db.Column(db.Integer, primary_key = True)
