@@ -4,7 +4,7 @@
       <div class="list-left-panel">
         <AddItem
           @info="addItemObj($event)"
-          @addClick="addItem()"
+          @addClick="addItem"
         />
       </div>
 
@@ -28,6 +28,7 @@
         :key="item.id"
         />
       </div>
+
   </section>
 </template>
 
@@ -64,7 +65,7 @@ export default {
       .catch(error => (
         console.log(error.response)
         ))
-      setTimeout(() => {window.location.reload()}, 500)
+      window.location.reload();
     }
   },
   beforeMount(){
