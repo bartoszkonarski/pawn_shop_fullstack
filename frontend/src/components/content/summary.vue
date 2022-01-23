@@ -22,10 +22,12 @@
         :brand="item.brand" 
         :state="item.state" 
         :info="item.info" 
-        :cost="item.cost" 
+        :cost="item.deposit" 
         :days="item.days_left" 
+        :id="item.id"
         v-for="item in items" 
         :key="item.id"
+        @del="deleteItem($event)"
         />
       </div>
   </section>
@@ -53,6 +55,7 @@ export default {
       this.newItem = newItemChild;
     },
     addItem: function(){
+    console.log(this.newItem)
       axios.post(
       'http://127.0.0.1:5000/deposit_item',
       this.newItem,
@@ -64,7 +67,21 @@ export default {
       .catch(error => (
         console.log(error.response)
         ))
-      setTimeout(() => {window.location.reload()}, 500)
+       setTimeout(() => {window.location.reload()}, 200)
+    },
+    deleteItem: function(id){
+        axios.delete(
+        'http://127.0.0.1:5000/deposit_item/'+id,
+        { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        )
+        .then(response => (
+            console.log(response.data)
+            ))
+        .catch(error => (
+            console.log(error.response)
+            ))
+        console.log(id)
+        setTimeout(() => {window.location.reload()}, 200)
     }
   },
   beforeMount(){

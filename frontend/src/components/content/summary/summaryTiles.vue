@@ -20,15 +20,15 @@
 <script>
 
     export default {
-    name: 'tiles',
-    components: {
-    },
-    emits: ['accepted'],
-    props: ['name','cost','state','info','brand', 'days','id'],
-    data: function () {
-        return {
+        name: 'tiles',
+        components: {
+        },
+        emits: ['accepted'],
+        props: ['name','cost','state','info','brand', 'days','id'],
+        data: function () {
+            return {
+            }
         }
-    }
     }
 </script>
 

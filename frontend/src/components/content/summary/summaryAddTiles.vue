@@ -41,7 +41,7 @@
                 <input 
                 type="number" 
                 class="edit-tiles-input"
-                v-model="newItem.cost"
+                v-model="newItem.deposit"
                 v-on:input="$emit('info',newItem)"
                 >
             </label> <br>
@@ -64,7 +64,7 @@ export default {
   },
   data: function () {
     return {
-        newItem: {name: '', cost: '', state: '', info: '', brand: ''}
+        newItem: {name: '', deposit: 0, state: '', info: '', brand: ''}
     }
   },
 //   methods: {
