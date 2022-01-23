@@ -1,42 +1,57 @@
 <template>
     <div class="edit-tiles-field">
-        <div class="edit-tiles-field-image">
-            <input type="image" class="edit-tiles-input-image">
-        </div>
         <div class="edit-tiles-field-info">
-            <label for="" class="edit-tites-label">Nazwa: 
-                <input type="text" class="edit-tiles-input" v-model="item.name">
+            <label for="" class="edit-tites-label" >Nazwa: 
+                <input 
+                type="text" 
+                class="edit-tiles-input"
+                v-model="newItem.name"
+                v-on:input="$emit('info',newItem)"
+                >
             </label> <br>
 
             <label for="" class="edit-tites-label">Marka: 
-                <input type="text" class="edit-tiles-input" v-model="item.brand">
+                <input 
+                type="text" 
+                class="edit-tiles-input"
+                v-model="newItem.brand"
+                v-on:input="$emit('info',newItem)"
+                >
             </label> <br>
 
             <label for="" class="edit-tites-label">Stan: 
-                <input type="text" class="edit-tiles-input" v-model="item.state">
+                <input 
+                type="text"
+                class="edit-tiles-input"
+                v-model="newItem.state"
+                v-on:input="$emit('info',newItem)"
+                >
             </label> <br>
 
             <label for="" class="edit-tites-label">Informacje: 
-                <input type="text" class="edit-tiles-input" v-model="item.info">
+                <input 
+                type="text" 
+                class="edit-tiles-input"
+                v-model="newItem.info"
+                v-on:input="$emit('info',newItem)"
+                >
             </label> <br>
 
             <label for="" class="edit-tites-label">Cena zakupu: 
-                <input type="number" class="edit-tiles-input" v-model="item.cost">
-            </label> <br>
-            
-            <label for="" class="edit-tites-label">Aktualna cena: 
-                <input type="number" class="edit-tiles-input" v-model="item.newCost">
+                <input 
+                type="number" 
+                class="edit-tiles-input"
+                v-model="newItem.deposit"
+                v-on:input="$emit('info',newItem)"
+                >
             </label> <br>
 
             <button 
             class="edit-tiles-button"
-            @click="$emit('editClick', item)"
-            > Edytuj </button>
-
-            <button 
-            class="edit-tiles-button"
-            @click="$emit('cancelClick')"
-            > Anuluj </button>
+            @click="$emit('addClick')"
+            >
+                <b>Zastaw!</b> 
+            </button>
         </div>
     </div>
 </template>
@@ -44,15 +59,19 @@
 <script>
 
 export default {
-  name: 'tiles',
-  props:['name','cost','state','info','brand','newCost','id'],
+  name: 'addTiles',
   components: {
   },
   data: function () {
     return {
-        item: {name: this.name, cost: this.cost, state: this.state, info: this.info, brand: this.brand, newCost: this.newCost, id: this.id}
+        newItem: {name: '', deposit: 0, state: '', info: '', brand: ''}
     }
-  }
+  },
+//   methods: {
+//         functi: function() {
+//             console.log(this.newItem.name);
+//       }
+//   },
 }
 </script>
 
@@ -94,7 +113,7 @@ export default {
     }
     .edit-tiles-input:focus{
         outline: none !important;
-        border-bottom: 2px solid rgb(69, 93, 230);
+        border-bottom: 2px solid #455de6;
         width:100%;
         transition: .5s;
     }
@@ -104,8 +123,7 @@ export default {
         border-radius: 5px;
     }
     .edit-tiles-button{
-        display: inline;
-        background: #7812a7;
+        background: #579949;
         color:white;
         border: none;
         margin-top: 30px;
@@ -115,12 +133,12 @@ export default {
         transition: .3s;
     }
     .edit-tiles-button:hover{
-        background: #7812a7;
+        background: #2a8f16;
         border: 1px solid;
         transition: .3s;
     }
     .edit-tiles-button:active{
-        background: #7812a7;
+        background: #156b04;
         border: 1px solid;
         height: 6vh;
         width: 6vh;

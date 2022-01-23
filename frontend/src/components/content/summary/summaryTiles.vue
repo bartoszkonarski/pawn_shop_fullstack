@@ -1,24 +1,17 @@
 <template>
     <div class="tiles-field">
-        <div class="tiles-field-image">
-           <img src="" alt="">
-        </div>
         <div class="tiles-field-info">
            <p>Nazwa: {{name}}</p>
            <p>Marka: {{brand}}</p>  
            <p>Stan: {{state}}</p>
            <p>Informacje: {{info}}</p>
            <p>Cena zakupu: {{cost}}</p>
-           <p>Aktualna cena: {{newCost}}</p>
-            <button 
-            @click="$emit('edit',{id,name,cost,state,info,brand,newCost})" 
-            class="tiles-field-info-button">
-                Edycja
-            </button>
+           <p>Pozostało dni: {{days}}</p>
+           
             <button 
             @click="$emit('del',id)" 
             class="tiles-field-info-button">
-                Usuń
+                Odebrano
             </button>
         </div>
     </div>
@@ -26,17 +19,17 @@
 
 <script>
 
-export default {
-  name: 'tiles',
-  components: {
-  },
-  emits: ['accepted'],
-  props: ['name','cost','state','info','brand','newCost','id'],
-  data: function () {
-    return {
+    export default {
+        name: 'tiles',
+        components: {
+        },
+        emits: ['accepted'],
+        props: ['name','cost','state','info','brand', 'days','id'],
+        data: function () {
+            return {
+            }
+        }
     }
-  }
-}
 </script>
 
 <style scoped>
@@ -56,7 +49,7 @@ export default {
         background:black;
     }
     .tiles-field-info{
-        width:50%;
+        width:80%;
         height: 80%;
         background: #C2D7DD;
         margin: 20px;
