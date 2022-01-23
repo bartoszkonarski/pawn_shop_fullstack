@@ -6,6 +6,7 @@
           @info="addItemObj($event)"
           @addClick="addItem()"
         />
+        
       </div>
 
       <div class="list-right-panel">
@@ -14,8 +15,7 @@
         :brand="newItem.brand"
         :state="newItem.state"
         :info="newItem.info"
-        :cost="newItem.cost"
-        :newCost="newItem.newCost"
+        :cost="newItem.deposit"
         />
         <Tiles 
         :name="item.name" 
@@ -23,7 +23,7 @@
         :state="item.state" 
         :info="item.info" 
         :cost="item.cost" 
-        :newCost="item.newCost" 
+        :days="item.days_left" 
         v-for="item in items" 
         :key="item.id"
         />
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import tiles from './listItem/tiles.vue'
-import addItem from './addItem/addTiles.vue'
+import tiles from './summary/summaryTiles.vue'
+import addItem from './summary/summaryAddTiles.vue'
 import axios from 'axios';
 
 export default {
@@ -45,7 +45,7 @@ export default {
   data: () => {
     return{
       items: [],
-      newItem: {name: '', cost: 0, state: '', info: '', brand: '', newCost: 0}
+      newItem: {name: '', deposit: 0, state: '', info: '', brand: ''}
     }
   },
   methods: {
@@ -54,7 +54,7 @@ export default {
     },
     addItem: function(){
       axios.post(
-      'http://127.0.0.1:5000/item',
+      'http://127.0.0.1:5000/deposit_item',
       this.newItem,
       { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
       )
@@ -71,7 +71,7 @@ export default {
     if(!this.$session.exists() || this.$session.get('tokken') == "") this.$router.push('/log')
 
     axios.get(
-    'http://127.0.0.1:5000/items',
+    'http://127.0.0.1:5000/deposit_items',
     { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
     )
     .then(response => (
