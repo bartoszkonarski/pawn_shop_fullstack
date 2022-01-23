@@ -5,38 +5,28 @@
         </div>
         <div class="edit-tiles-field-info">
             <label for="" class="edit-tites-label">Nazwa: 
-                <input type="text" class="edit-tiles-input" v-model="item.name">
+                <input type="text" class="edit-tiles-input">
             </label> <br>
 
             <label for="" class="edit-tites-label">Marka: 
-                <input type="text" class="edit-tiles-input" v-model="item.brand">
+                <input type="text" class="edit-tiles-input">
             </label> <br>
 
             <label for="" class="edit-tites-label">Stan: 
-                <input type="text" class="edit-tiles-input" v-model="item.state">
+                <input type="text" class="edit-tiles-input">
             </label> <br>
 
             <label for="" class="edit-tites-label">Informacje: 
-                <input type="text" class="edit-tiles-input" v-model="item.info">
+                <input type="text" class="edit-tiles-input">
             </label> <br>
 
             <label for="" class="edit-tites-label">Cena zakupu: 
-                <input type="number" class="edit-tiles-input" v-model="item.cost">
+                <input type="number" class="edit-tiles-input">
             </label> <br>
             
             <label for="" class="edit-tites-label">Aktualna cena: 
-                <input type="number" class="edit-tiles-input" v-model="item.newCost">
+                <input type="number" class="edit-tiles-input">
             </label> <br>
-
-            <button 
-            class="edit-tiles-button"
-            @click="$emit('editClick', item)"
-            > Edytuj </button>
-
-            <button 
-            class="edit-tiles-button"
-            @click="$emit('cancelClick')"
-            > Anuluj </button>
         </div>
     </div>
 </template>
@@ -45,12 +35,10 @@
 
 export default {
   name: 'tiles',
-  props:['name','cost','state','info','brand','newCost','id'],
   components: {
   },
   data: function () {
     return {
-        item: {name: this.name, cost: this.cost, state: this.state, info: this.info, brand: this.brand, newCost: this.newCost, id: this.id}
     }
   }
 }
@@ -102,28 +90,5 @@ export default {
         background: rgb(153, 87, 153);
         color:black;
         border-radius: 5px;
-    }
-    .edit-tiles-button{
-        display: inline;
-        background: #7812a7;
-        color:white;
-        border: none;
-        margin-top: 30px;
-        height: 7vh;
-        width: 7vh;
-        border-radius: 100%;
-        transition: .3s;
-    }
-    .edit-tiles-button:hover{
-        background: #7812a7;
-        border: 1px solid;
-        transition: .3s;
-    }
-    .edit-tiles-button:active{
-        background: #7812a7;
-        border: 1px solid;
-        height: 6vh;
-        width: 6vh;
-        transition: .3s;
     }
 </style>
