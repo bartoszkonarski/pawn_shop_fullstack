@@ -110,6 +110,7 @@ export default {
         border-bottom: 2px solid rgb(85, 84, 84);
         background: none;
         transition: .5s;
+        font-size: 18px;
     }
     .edit-tiles-input:focus{
         outline: none !important;
@@ -143,5 +144,9 @@ export default {
         height: 6vh;
         width: 6vh;
         transition: .3s;
+    }
+    .edit-tites-label{
+        font-size: 25px;
+        font-weight: bold;
     }
 </style>

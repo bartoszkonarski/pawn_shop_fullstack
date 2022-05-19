@@ -46,7 +46,7 @@ class UserLogin(Resource):
     def post(self):
         current_user = User.find_by_username(request.json['username'])
         if not current_user: # remove this for security issue.
-            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])},504
+            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])},404
 
         if User.verify_hash(request.json['password'], current_user.password):
             access_token = create_access_token(identity = request.json['username'], expires_delta=timedelta(days=30))
@@ -55,7 +55,7 @@ class UserLogin(Resource):
                     'access_token': access_token
                     }
         else:
-            return {'message': 'Wrong credentials'},504
+            return {'message': 'Wrong credentials'},404
 
 
 class UserLogoutAccess(Resource):
@@ -101,6 +101,36 @@ class SingleItem(Resource):
         result = Item.query.filter_by(id=item_id)
         return items_schema.dump(result)
 
+    @jwt_required()
+    def delete(self, item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+            
+        try:
+            Item.query.filter_by(id=item_id).delete()
+            db.session.commit()
+            return {'message': f'Item: {item_id} succesfully deleted'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+    
+    @jwt_required()
+    def put(self,item_id):
+        jti = get_jwt()['jti']
+        if RevokedTokenModel.is_jti_blacklisted(jti):
+            return {'message': 'Access Denied'}, 403
+
+        item = Item.query.filter_by(id=item_id).first()
+        item.name = request.json['name']
+        item.cost = round(float(request.json['cost']),2)
+        item.state = request.json['state']
+        item.info = request.json['info']
+        item.brand = request.json['brand']
+        item.newCost = round(float(request.json['newCost']),2)
+        
+        db.session.commit()
+        return {'message': f'Item: {item_id} succesfully edited'}
+
 class AddItem(Resource):
     @jwt_required()
     def post(self):
@@ -109,11 +139,11 @@ class AddItem(Resource):
             return {'message': 'Access Denied'}, 403
         try:
             item = Item(name = request.json['name'],
-                        cost = float(request.json['cost']),
+                        cost = round(float(request.json['cost']),2),
                         state = request.json['state'],
                         info = request.json['info'],
                         brand = request.json['brand'],
-                        newCost = float(request.json['newCost'])
+                        newCost = round(float(request.json['newCost']),2)
                     )
             db.session.add(item)
             db.session.commit()
@@ -163,7 +193,7 @@ class AddDepositItem(Resource):
             time_change = timedelta(days=30)
             expiry_dt = datetime.now() + time_change
             item = DepositItem(name = request.json['name'],
-                        deposit = float(request.json['deposit']),
+                        deposit = round(float(request.json['deposit']),2),
                         state = request.json['state'],
                         info = request.json['info'],
                         brand = request.json['brand'],
@@ -181,16 +211,15 @@ class TransferExpiredItems(Resource):
         jti = get_jwt()['jti']
         if RevokedTokenModel.is_jti_blacklisted(jti):
             return {'message': 'Access Denied'}, 403
-        
         try:
             for deposit_item in DepositItem.query.all():
                 if deposit_item.expiry_date<=datetime.now():
                     item = Item(name = deposit_item.name,
-                            cost = float(deposit_item.deposit),
+                            cost = round(float(deposit_item.deposit),2),
                             state = deposit_item.state,
                             info = deposit_item.info,
                             brand = deposit_item.brand,
-                            newCost = float(deposit_item.deposit*1.3)
+                            newCost = round(float(deposit_item.deposit*1.3),2)
                         )
                     db.session.add(item)
                     DepositItem.query.filter_by(id=deposit_item.id).delete()

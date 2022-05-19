@@ -4,6 +4,9 @@ import VueRouter from 'vue-router'
 import Routes from './routers'
 import VueSession from 'vue-session'
 
+
+
+
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 

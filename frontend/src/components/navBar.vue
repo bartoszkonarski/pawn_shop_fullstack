@@ -31,7 +31,7 @@
       <div class="nav-accond-info">
         {{accondName}}      
         <button 
-        style="background-color: #EB714F; width:80%"
+        class="nav-accond-info-button"
         @click="$emit('logOut')"
         >
             LogOut
@@ -51,7 +51,7 @@ import addItem from './content/addItem.vue';
 import listItem from './content/listItem.vue';
 import addIcon from ".././assets/add.png";
 import basketIcon from ".././assets/basket.png";
-import summaryIcon from ".././assets/star-of-david.png";
+import summaryIcon from ".././assets/summary.png";
 
 export default {
   name: 'navBar',
@@ -62,7 +62,7 @@ export default {
       return{
         addItem: addItem,
         listItem: listItem,
-        accondName:"user_name",
+        accondName:"username",
         addIcon: addIcon,
         basketIcon: basketIcon,
         summaryIcon: summaryIcon,
@@ -105,7 +105,6 @@ export default {
   height: 14vh;
   text-align: center;
   align-items: center;
-
 }
 .nav-accond-info{
   background:#4DC8F0;
@@ -128,10 +127,22 @@ export default {
   margin-top:20%;
   transform: scale(2);
 }
+.nav-accond-info-button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width:120px;
+  height: 30px;
+  background: rgb(153, 25, 89);
+  color:white;
+  border-radius: 10px;
+  border: solid rgba(255, 0, 0, 0.192)
+}
 img{
   width: 30vw;
   height: 14vh;
 }
+
 router-link{
  border-top: solid 4px white;
 }

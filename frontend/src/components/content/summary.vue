@@ -5,17 +5,23 @@
         <AddItem
           @info="addItemObj($event)"
           @addClick="addItem()"
-        />
-        
+        />  
       </div>
 
       <div class="list-right-panel">
+        <button
+        @click="synchItem()"
+        class="list-right-panel-button"
+        >
+          Przenieś do sprzedaży przedmioty których termin zastawu upłynął 
+        </button>
         <Tiles
         :name="newItem.name"
         :brand="newItem.brand"
         :state="newItem.state"
         :info="newItem.info"
         :cost="newItem.deposit"
+        :days="30" 
         />
         <Tiles 
         :name="item.name" 
@@ -82,6 +88,20 @@ export default {
             ))
         console.log(id)
         setTimeout(() => {window.location.reload()}, 200)
+    },
+    synchItem: function() {
+      axios.patch(
+        'http://127.0.0.1:5000/sell_expired',
+        {o:1},
+        { headers: {'Authorization': "Bearer "+this.$session.get('tokken')}}
+        )
+        .then(response => (
+            console.log(response.data)
+            ))
+        .catch(error => (
+            console.log(error.response)
+            ))
+        setTimeout(() => {window.location.reload()}, 200)
     }
   },
   beforeMount(){
@@ -109,7 +129,7 @@ export default {
     position: fixed;
     width:35%;
     height: 84vh;
-    background: #663EFF;
+    background: #6666FF;
     float:left;
   }
   .list-right-panel{
@@ -122,5 +142,20 @@ export default {
     padding: 4% 2%;
     background: #18ADD6; 
     width:61%; 
+  }
+  .list-right-panel-button{
+    height: 5vh;
+    width: 15vw;
+    background-color: #d69a18;
+    border: solid #eca813;
+    border-radius: 5px;
+  }
+  .list-right-panel-button:hover{
+    background-color: #eeaa19;
+    border: solid #ffba24;
+  }
+  .list-right-panel-button:active{
+    height: 4vh;
+    width: 13vw;
   }
 </style>

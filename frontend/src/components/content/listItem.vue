@@ -82,6 +82,7 @@ export default {
           console.log(error.response),
           this.response = error.response
           ))
+        setTimeout(() => {window.location.reload()}, 200)
     },
     editClick: function(item){
       var result = confirm("Czy jesteś pewien że chcesz edytować ten obiekt?");
@@ -101,6 +102,7 @@ export default {
           console.log(error.response),
           this.response = error.response
           ))
+        setTimeout(() => {window.location.reload()}, 200)
       }
     },
     cancelClick: function(){

@@ -1,15 +1,12 @@
 <template>
     <div class="tiles-field">
-        <div class="tiles-field-image">
-           <img src="" alt="">
-        </div>
         <div class="tiles-field-info">
            <p>Nazwa: {{name}}</p>
            <p>Marka: {{brand}}</p>  
            <p>Stan: {{state}}</p>
            <p>Informacje: {{info}}</p>
-           <p>Cena zakupu: {{cost}}</p>
-           <p>Aktualna cena: {{newCost}}</p>
+           <p>Cena zakupu: {{cost.toFixed(2)}}zł</p>
+           <p>Aktualna cena: {{newCost.toFixed(2)}}zł</p>
             <button 
             @click="$emit('edit',{id,name,cost,state,info,brand,newCost})" 
             class="tiles-field-info-button">
@@ -44,7 +41,7 @@ export default {
         display: flex;
         flex-direction:row;
         align-items: center;
-        height: 300px;
+        min-height: 300px;
         width: 80%;
         margin: 20px;
         padding: 10px;
@@ -56,7 +53,7 @@ export default {
         background:black;
     }
     .tiles-field-info{
-        width:50%;
+        width:80%;
         height: 80%;
         background: #C2D7DD;
         margin: 20px;
@@ -65,7 +62,7 @@ export default {
     }
     .tiles-field-info-button{
         width: 20%;
-        height: 14%;
+        min-height: 35px;
         background: rgb(70, 44, 70);
         color: white;
         border-radius: 15px;

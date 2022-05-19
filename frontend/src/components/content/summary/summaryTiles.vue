@@ -5,7 +5,7 @@
            <p>Marka: {{brand}}</p>  
            <p>Stan: {{state}}</p>
            <p>Informacje: {{info}}</p>
-           <p>Cena zakupu: {{cost}}</p>
+           <p>Cena zakupu: {{cost.toFixed(2)}}zł</p>
            <p>Pozostało dni: {{days}}</p>
            
             <button 
@@ -37,7 +37,7 @@
         display: flex;
         flex-direction:row;
         align-items: center;
-        height: 300px;
+        min-height: 300px;
         width: 80%;
         margin: 20px;
         padding: 10px;
@@ -58,7 +58,7 @@
     }
     .tiles-field-info-button{
         width: 20%;
-        height: 14%;
+        height: 35px;
         background: rgb(70, 44, 70);
         color: white;
         border-radius: 15px;

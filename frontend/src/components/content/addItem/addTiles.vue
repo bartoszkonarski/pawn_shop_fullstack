@@ -1,10 +1,7 @@
 <template>
     <div class="edit-tiles-field">
-        <div class="edit-tiles-field-image">
-            <input type="image" class="edit-tiles-input-image">
-        </div>
         <div class="edit-tiles-field-info">
-            <label for="" class="edit-tites-label" >Nazwa: 
+            <label for="" class="edit-tites-label" >Nazwa:
                 <input 
                 type="text" 
                 class="edit-tiles-input"
@@ -122,6 +119,7 @@ export default {
         border-bottom: 2px solid rgb(85, 84, 84);
         background: none;
         transition: .5s;
+        font-size: 18px;
     }
     .edit-tiles-input:focus{
         outline: none !important;
@@ -155,5 +153,9 @@ export default {
         height: 6vh;
         width: 6vh;
         transition: .3s;
+    }
+    .edit-tites-label{
+        font-size: 25px;
+        font-weight: bold;
     }
 </style>

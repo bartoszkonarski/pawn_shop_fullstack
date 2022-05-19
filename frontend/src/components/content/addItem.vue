@@ -92,7 +92,7 @@ export default {
     position: fixed;
     width:35%;
     height: 84vh;
-    background: #663EFF;
+    background: #6666FF;
     float:left;
   }
   .list-right-panel{

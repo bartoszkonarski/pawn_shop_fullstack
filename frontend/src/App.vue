@@ -38,8 +38,12 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;900&display=swap');
+
 body {
   margin: 0px;
-  background: #663EFF;
+  background: #6666FF;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 10px;
 }
 </style>
